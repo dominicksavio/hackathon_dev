@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service'; // Adjust the path as necessary
+
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private router: Router) { }
+  // constructor(private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { } // Inject AuthService here
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -27,7 +30,10 @@ export class LoginComponent implements OnInit {
       // Assuming you have a service to validate login credentials
       // this.authService.login(this.loginForm.value).subscribe(success => {
       if (true) { // Replace this with your actual login logic
-        this.router.navigate(['/home']); // Navigate to the home page on success
+        this.authService.login(); // Here we should ideally pass username and password to login method
+
+        // Navigate to the home page on successful login
+        this.router.navigate(['/home']);
       } else {
         // Handle login failure (show error message)
       }
