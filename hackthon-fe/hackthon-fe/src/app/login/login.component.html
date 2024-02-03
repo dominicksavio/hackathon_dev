@@ -1,0 +1,38 @@
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <h1><i class="fa fa-lock" aria-hidden="true"></i> Login</h1>
+      </div>
+      <br /><br />
+      
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+        </div>
+        <input type="text" formControlName="username" class="form-control" placeholder="username or email"/>
+        <!-- Error message for username -->
+        <div *ngIf="loginForm.get('username')?.errors && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)">
+          <small class="text-danger" *ngIf="loginForm.get('username')?.errors?.['required']">Username is required.</small>
+          <small class="text-danger" *ngIf="loginForm.get('username')?.errors?.['email']">Please enter a valid email.</small>
+        </div>
+      </div>
+      <br />
+      
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-key icon"></i></span>
+        </div>
+        <input type="password" formControlName="password" class="form-control" placeholder="password"/>
+        <!-- Error message for password -->
+        <div *ngIf="loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">
+          <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+      <br />
+      
+      <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
+    </form>
+    <!-- Additional content -->
+  </div>
+  
