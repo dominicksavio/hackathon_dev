@@ -13,9 +13,6 @@ const routes: Routes = [
   { 
     path: 'home', component: HomeComponent 
   },
-  { 
-    path: 'home-ending', component: HomeComponent 
-  },
 ];
 
 @NgModule({
