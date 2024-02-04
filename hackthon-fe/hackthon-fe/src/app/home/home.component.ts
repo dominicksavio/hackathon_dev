@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit {
       console.error('Texture is not initialized.');
       return;
     }
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const geometry = new THREE.SphereGeometry(0.0899, 32, 32);
     // const material = new THREE.MeshPhongMaterial({ map: this.dayTexture }); // Start with day texture
     const material = new THREE.MeshPhongMaterial({
       map: this.dayTexture, // Start with day texture
@@ -239,4 +239,93 @@ export class HomeComponent implements OnInit {
     this.formData.email = '';
     this.formData.message = '';
   }
+  
+  // Define a property to store the current texture type
+  private currentTexture: string = 'day'; // Default to 'day'
+  private currentNumber: number = 2;//earth
+  private sizes: number[] = [ 
+    0.0342,//Mercury
+    0.0857,//Venus
+    0.0899,//Earth
+    0.0483,//Mars
+    2,//Jupiter
+    1.94,//Saturn
+    0.362,//Uranus
+    0.352,//Neptune
+  ];
+  private planets: string[] = [ 
+    'Mercury',
+    'Venus',
+    'Earth',
+    'Mars',
+    'Jupiter',
+    'Saturn',
+    'Uranus',
+    'Neptune',
+  ];
+ 
+  
+  // Initialize the current planet name with the default planet
+  currentPlanetName: string = 'Earth';
+
+  // Function to change the globe's texture
+  public changeTexture(textureType: string): void {
+    console.log('textureType',textureType);
+    if (!this.globe || !this.dayTexture || !this.nightTexture) {
+      console.error('Globe or textures not initialized.');
+      return;
+    }
+    
+    // Apply the appropriate texture (day or night)
+    if (textureType === 'left') {
+      this.currentNumber = (this.currentNumber-1)%8;
+      this.currentNumber = this.currentNumber<0?7:this.currentNumber;
+      this.currentPlanetName = this.planets[this.currentNumber];
+      if (this.globe) {
+        // Remove the existing globe from the scene
+        this.scene.remove(this.globe);
+        this.globe.geometry.dispose();
+        // this.globe.material.dispose();
+      }
+      let newSize = this.sizes[this.currentNumber];
+      console.log('this.currentNumber',this.currentNumber);
+      console.log('newSize',newSize);
+      // Create a new globe with the specified size
+      const geometry = new THREE.SphereGeometry(newSize, 32, 32);
+      const material = new THREE.MeshPhongMaterial({
+        map: this.currentTexture === 'day' ? this.dayTexture : this.nightTexture,
+        emissive: this.currentTexture === 'day' ? 0x444444 : 0x000000,
+      });
+      this.globe = new THREE.Mesh(geometry, material);
+  
+      // Add the new globe to the scene
+      this.scene.add(this.globe);
+      
+    }  else if (textureType === 'right') {
+      this.currentNumber = (this.currentNumber+1)%8;
+      // this.currentNumber = this.currentNumber<0?this.currentNumber*-1:this.currentNumber;
+      this.currentPlanetName = this.planets[this.currentNumber];
+      if (this.globe) {
+        // Remove the existing globe from the scene
+        this.scene.remove(this.globe);
+        this.globe.geometry.dispose();
+        // this.globe.material.dispose();
+      }
+      let newSize = this.sizes[this.currentNumber];
+      console.log('this.currentNumber',this.currentNumber);
+      console.log('newSize',newSize);
+      // Create a new globe with the specified size
+      const geometry = new THREE.SphereGeometry(newSize, 32, 32);
+      const material = new THREE.MeshPhongMaterial({
+        map: this.currentTexture === 'day' ? this.dayTexture : this.nightTexture,
+        emissive: this.currentTexture === 'day' ? 0x444444 : 0x000000,
+      });
+      this.globe = new THREE.Mesh(geometry, material);
+  
+      // Add the new globe to the scene
+      this.scene.add(this.globe);
+      
+    }
+  }
+
 }

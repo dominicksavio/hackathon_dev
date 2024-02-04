@@ -101,3 +101,28 @@ button[type="submit"]:hover {
 .logout-button:hover {
   background-color: #d00; /* Button background color on hover */
 }
+
+/* Add this CSS to your stylesheet */
+
+/* Styling for the texture change buttons */
+.texture-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.texture-button {
+  background-color: #3498db; /* Change the background color to your preferred color */
+  color: #fff; /* Text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.texture-button:hover {
+  background-color: #2980b9; /* Change the background color on hover */
+}
+
+/* You can customize the button style further based on your design preferences */
